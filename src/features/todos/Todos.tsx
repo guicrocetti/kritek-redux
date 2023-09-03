@@ -6,6 +6,7 @@ import {
   useUpdateTaskMutation,
 } from "../apiSlice"
 import { Todo } from "./todoSlice"
+import "./Todos.module.css"
 
 function Todos() {
   const { data: tasks, isLoading, refetch } = useGetTasksQuery("")
@@ -48,8 +49,8 @@ function Todos() {
   }
 
   return (
-    <div>
-      <div>
+    <div className="todos-container">
+      <div className="add-task-container">
         <input
           type="text"
           placeholder="Task title"
@@ -58,13 +59,13 @@ function Todos() {
         />
         <button onClick={handleAddTask}>Add Task</button>
       </div>
-      <ul>
+      <ul className="task-list">
         {isLoading ? (
           <div>Loading...</div>
         ) : (
           tasks &&
           tasks.map((task: Todo) => (
-            <li key={task.id}>
+            <li key={task.id} className="task-item">
               <input
                 type="checkbox"
                 checked={task.completed}
