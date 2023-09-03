@@ -1,14 +1,3 @@
 {
-  "tasks": [
-    {
-      "title": "testete",
-      "completed": false,
-      "id": 16
-    },
-    {
-      "title": "testet",
-      "completed": false,
-      "id": 17
-    }
-  ]
+  "tasks": []
 }
