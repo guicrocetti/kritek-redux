@@ -4,20 +4,13 @@ export interface TodoState {
   todos: Todo[]
 }
 
-interface Todo {
+export interface Todo {
   id: number
   text: string
-  checked: boolean
 }
 
 const initialState: TodoState = {
   todos: [],
-}
-
-export const removeAllCheckedTodos = () => (dispatch: any, getState: any) => {
-  const { todos: data } = getState()
-  const uncheckedTodos = data.todos.filter((todo: Todo) => !todo.checked)
-  dispatch(setTodos([uncheckedTodos]))
 }
 
 const todoSlice = createSlice({
@@ -38,11 +31,10 @@ const todoSlice = createSlice({
       state.todos = state.todos.filter((todo) => todo.id !== action.payload)
     },
     updateTodo: (state, action) => {
-      const index = state.todos.findIndex(
-        (todo) => todo.id === action.payload.id,
-      )
-      if (index !== -1) {
-        state.todos[index] = action.payload
+      const { id, text } = action.payload
+      const todo = state.todos.find((todo) => todo.id === id)
+      if (todo) {
+        todo.text = text
       }
     },
     setTodos: (state, action) => {
