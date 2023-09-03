@@ -1,7 +1,7 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react"
 
 export const api = createApi({
-  baseQuery: fetchBaseQuery({ baseUrl: "/api" }), // JSON Server API endpoint
+  baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:3001" }), // JSON Server API endpoint
   endpoints: (builder) => ({
     getTasks: builder.query({
       query: () => "tasks",

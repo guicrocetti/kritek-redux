@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import {
   useGetTasksQuery,
   useCreateTaskMutation,
@@ -8,7 +8,7 @@ import {
 import { Todo } from "./todoSlice"
 
 function Todos() {
-  const { data: tasks } = useGetTasksQuery("")
+  const { data: tasks, isLoading, refetch } = useGetTasksQuery("")
   const [taskTitle, setTaskTitle] = useState("")
   const [createTask] = useCreateTaskMutation()
   const [deleteTask] = useDeleteTaskMutation()
@@ -18,6 +18,7 @@ function Todos() {
     try {
       await createTask({ title: taskTitle, completed: false })
       setTaskTitle("")
+      refetch()
     } catch (error) {
       console.error("Error creating task:", error)
     }
@@ -26,6 +27,7 @@ function Todos() {
   const handleRemoveTask = async (id: number) => {
     try {
       await deleteTask(id)
+      refetch()
     } catch (error) {
       console.error("Error deleting task:", error)
     }
@@ -38,9 +40,14 @@ function Todos() {
         title: task.title,
         completed: !task.completed,
       })
+      refetch()
     } catch (error) {
       console.error("Error updating task:", error)
     }
+  }
+
+  if (isLoading) {
+    return <div>Loading...</div>
   }
 
   return (
@@ -58,12 +65,8 @@ function Todos() {
         {tasks &&
           tasks.map((task: Todo) => (
             <li key={task.id}>
-              <input
-                type="checkbox"
-                checked={task.completed}
-                onChange={() => handleToggleTask(task)}
-              />
               {task.title}
+              <button onClick={() => handleToggleTask(task)}>Update</button>
               <button onClick={() => handleRemoveTask(task.id)}>Delete</button>
             </li>
           ))}
