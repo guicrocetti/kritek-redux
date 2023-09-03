@@ -1,6 +1,6 @@
 import logo from "./logo.svg"
 import "./App.css"
-import { Todos } from "./features/todos/Todos"
+import Todos from "./features/todos/Todos"
 
 function App() {
   return (

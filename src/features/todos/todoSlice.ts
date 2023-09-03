@@ -6,7 +6,8 @@ export interface TodoState {
 
 export interface Todo {
   id: number
-  text: string
+  title: string
+  completed: boolean
 }
 
 const initialState: TodoState = {
@@ -21,8 +22,8 @@ const todoSlice = createSlice({
       console.log("addTodo", action.payload)
       const newTodo = {
         id: state.todos.length + 1,
-        text: action.payload,
-        checked: false,
+        title: action.payload,
+        completed: false,
       }
       state.todos.push(newTodo)
     },
@@ -34,7 +35,7 @@ const todoSlice = createSlice({
       const { id, text } = action.payload
       const todo = state.todos.find((todo) => todo.id === id)
       if (todo) {
-        todo.text = text
+        todo.title = text
       }
     },
     setTodos: (state, action) => {
